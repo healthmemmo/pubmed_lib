@@ -95,11 +95,14 @@ def fetch_details(
 def results(
     self:Search,
     query:str, #Term to be queried in pubmed
-)->Generator[Result, None, None]:
+)->list:
     """
     Method that do the search and retrieve a generator with all the infomration of the articles"""
+    results = []
     id_list = self.search(query)
     articles = self.fetch_details(id_list)
     for article in articles:
         article_dict = parse_paperinfo(article)
-        yield Result.parse_obj(article_dict)
+        results.append( Result.parse_obj(article_dict))
+    return results
+
