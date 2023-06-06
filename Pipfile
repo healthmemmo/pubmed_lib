@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+nbdev = "*"
+jupyter = "*"
+fastcore = "*"
+pydantic = "*"
+biopython = "*"
+pandas = "*"
+seaborn = "*"
+plotly = "*"
+matplotlib = "*"
+numpy = "*"
+python-dotenv = "*"
+pubmed-lib = {editable = true, path = "."}
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

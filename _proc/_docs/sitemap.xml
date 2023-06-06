@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://Dmaturana81.github.io/pubmed_lib/core.html</loc>
+    <lastmod>2023-06-06T01:17:13.611Z</lastmod>
+  </url>
+  <url>
     <loc>https://Dmaturana81.github.io/pubmed_lib/data.html</loc>
-    <lastmod>2023-06-06T00:23:39.391Z</lastmod>
+    <lastmod>2023-06-06T01:41:22.751Z</lastmod>
   </url>
   <url>
     <loc>https://Dmaturana81.github.io/pubmed_lib/result.html</loc>
-    <lastmod>2023-06-06T00:23:39.966Z</lastmod>
+    <lastmod>2023-06-06T01:41:33.348Z</lastmod>
   </url>
   <url>
     <loc>https://Dmaturana81.github.io/pubmed_lib/author.html</loc>
-    <lastmod>2023-06-06T00:23:40.493Z</lastmod>
+    <lastmod>2023-06-06T01:39:42.317Z</lastmod>
   </url>
   <url>
     <loc>https://Dmaturana81.github.io/pubmed_lib/retriever.html</loc>
-    <lastmod>2023-06-06T00:23:40.954Z</lastmod>
+    <lastmod>2023-06-06T01:41:26.606Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Dmaturana81.github.io/pubmed_lib/index-checkpoint.html</loc>
+    <lastmod>2023-06-06T01:17:18.121Z</lastmod>
   </url>
   <url>
     <loc>https://Dmaturana81.github.io/pubmed_lib/affiliations.html</loc>
-    <lastmod>2023-06-06T00:23:41.421Z</lastmod>
+    <lastmod>2023-06-06T01:41:49.629Z</lastmod>
   </url>
   <url>
     <loc>https://Dmaturana81.github.io/pubmed_lib/parser.html</loc>
-    <lastmod>2023-06-06T00:23:42.192Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Dmaturana81.github.io/pubmed_lib/index.html</loc>
-    <lastmod>2023-06-06T00:23:43.385Z</lastmod>
+    <lastmod>2023-06-06T01:40:21.189Z</lastmod>
   </url>
   <url>
     <loc>https://Dmaturana81.github.io/pubmed_lib/viz.html</loc>
-    <lastmod>2023-06-06T00:23:43.835Z</lastmod>
+    <lastmod>2023-06-06T01:41:30.297Z</lastmod>
   </url>
   <url>
     <loc>https://Dmaturana81.github.io/pubmed_lib/search.html</loc>
-    <lastmod>2023-06-06T00:23:44.506Z</lastmod>
+    <lastmod>2023-06-06T01:41:13.230Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Dmaturana81.github.io/pubmed_lib/index.html</loc>
+    <lastmod>2023-06-06T01:40:20.262Z</lastmod>
   </url>
 </urlset>

@@ -246,17 +246,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    mindate:Optional[<span class="bu">int</span>] <span class="op">=</span> <span class="va">None</span> <span class="co">#Initial data to be search from, year</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    maxdate:Optional[<span class="bu">int</span>] <span class="op">=</span> <span class="va">None</span> <span class="co">#Final data to be search from, year</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    idlist:Optional[List[<span class="bu">int</span>]]</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    Entrez.email <span class="op">=</span> os.environ.get(<span class="st">'EMAIL'</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    Entrez.api_key <span class="op">=</span> os.environ.get(<span class="st">'API_KEY'</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">@validator</span>(<span class="st">'search_tag'</span>, always<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> validate_search_tag(cls, v):</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> v:</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            v <span class="op">=</span> <span class="st">'Title/Abstract'</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> v <span class="kw">not</span> <span class="kw">in</span> SEARCH_TAGS.keys():</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f'Search tag need to be some of </span><span class="sc">{</span>SEARCH_TAGS<span class="sc">.</span>keys()<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> SEARCH_TAGS[v]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    email:<span class="bu">str</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    api_key:<span class="bu">str</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">@validator</span>(<span class="st">'search_tag'</span>, always<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> validate_search_tag(cls, v):</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> v:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            v <span class="op">=</span> <span class="st">'Title/Abstract'</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> v <span class="kw">not</span> <span class="kw">in</span> SEARCH_TAGS.keys():</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f'Search tag need to be some of </span><span class="sc">{</span>SEARCH_TAGS<span class="sc">.</span>keys()<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> SEARCH_TAGS[v]</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">@validator</span>(<span class="st">'email'</span>,always<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> validate_email(cls,v ):</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'EMAIL'</span> <span class="kw">not</span> <span class="kw">in</span> os.environ.keys() <span class="kw">or</span> <span class="st">'API_KEY'</span> <span class="kw">not</span> <span class="kw">in</span> os.environ.keys():</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"you need to add email and api_key to the environment variables"</span>)            </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"['EMAIL'] and ['API_KEY']"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">EnvironmentError</span>()</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>: </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> os.environ.get(<span class="st">'EMAIL'</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">@validator</span>(<span class="st">'api_key'</span>,always<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> validate_api(cls,v ):</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'EMAIL'</span> <span class="kw">not</span> <span class="kw">in</span> os.environ.keys() <span class="kw">or</span> <span class="st">'API_KEY'</span> <span class="kw">not</span> <span class="kw">in</span> os.environ.keys():</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"you need to add email and api_key to the environment variables"</span>)            </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"['EMAIL'] and ['API_KEY']"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">EnvironmentError</span>()</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>: </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> os.environ.get(<span class="st">'API_KEY'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
 <p><a href="https://github.com/Dmaturana81/pubmed_lib/blob/main/pubmed_lib/search.py#L20" target="_blank" style="float:right; font-size:smaller">source</a></p>
@@ -265,7 +282,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <pre><code> Search (search_tag:str=None, retmax:int=200, retmode:str='xml',
          sort:str='relevance', mindate:Optional[int]=None,
-         maxdate:Optional[int]=None, idlist:Optional[List[int]]=None)</code></pre>
+         maxdate:Optional[int]=None, idlist:Optional[List[int]]=None,
+         email:str=None, api_key:str=None)</code></pre>
 </blockquote>
 <p>Search class to warp the search and results</p>
 <div class="cell">
@@ -277,19 +295,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">    It receive a query to be searched in pubmed and return the handler of the search</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> query<span class="op">+</span><span class="va">self</span>.search_tag</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    handle <span class="op">=</span> Entrez.esearch(db<span class="op">=</span><span class="st">'pubmed'</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                    sort<span class="op">=</span><span class="va">self</span>.sort,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                    retmax<span class="op">=</span><span class="va">self</span>.retmax,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                    retmode<span class="op">=</span><span class="va">self</span>.retmode,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                    term<span class="op">=</span>query,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                    mindate <span class="op">=</span> <span class="va">self</span>.mindate,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                    maxdate <span class="op">=</span><span class="va">self</span>. maxdate)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> Entrez.read(handle)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results[<span class="st">'IdList'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    Entrez.email <span class="op">=</span> <span class="va">self</span>.email</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    Entrez.api_key <span class="op">=</span> <span class="va">self</span>.api_key</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> query<span class="op">+</span><span class="va">self</span>.search_tag</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    handle <span class="op">=</span> Entrez.esearch(db<span class="op">=</span><span class="st">'pubmed'</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                    sort<span class="op">=</span><span class="va">self</span>.sort,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                    retmax<span class="op">=</span><span class="va">self</span>.retmax,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                    retmode<span class="op">=</span><span class="va">self</span>.retmode,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                    term<span class="op">=</span>query,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                    mindate <span class="op">=</span> <span class="va">self</span>.mindate,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                    maxdate <span class="op">=</span><span class="va">self</span>. maxdate)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> Entrez.read(handle)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results[<span class="st">'IdList'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'patch' is not defined</code></pre>
+</div>
 </div>
 <hr>
-<p><a href="https://github.com/Dmaturana81/pubmed_lib/blob/main/pubmed_lib/search.py#L46" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Dmaturana81/pubmed_lib/blob/main/pubmed_lib/search.py#L63" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="search.search" class="level3">
 <h3 class="anchored" data-anchor-id="search.search">Search.search</h3>
@@ -314,31 +337,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>search <span class="op">=</span> Search(retmax<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>search <span class="op">=</span> Search(retmax<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>search.<span class="bu">dict</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>{'search_tag': '[tiab]',
- 'retmax': 2,
- 'retmode': 'xml',
- 'sort': 'relevance',
- 'mindate': None,
- 'maxdate': None,
- 'idlist': None}</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>idlist <span class="op">=</span> search.search(<span class="st">'divisome'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>idlist <span class="op">=</span> search.search(<span class="st">'divisome'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>idlist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>idlist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>['33536648', '32424210']</code></pre>
 </div>
 </div>
 <hr>
-<p><a href="https://github.com/Dmaturana81/pubmed_lib/blob/main/pubmed_lib/search.py#L66" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Dmaturana81/pubmed_lib/blob/main/pubmed_lib/search.py#L85" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="search.fetch_details" class="level3">
 <h3 class="anchored" data-anchor-id="search.fetch_details">Search.fetch_details</h3>
@@ -363,24 +374,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="at">@patch</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> results(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>:Search,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    query:<span class="bu">str</span>, <span class="co">#Term to be queried in pubmed</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Generator[Result, <span class="va">None</span>, <span class="va">None</span>]:</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Method that do the search and retrieve a generator with all the infomration of the articles"""</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    id_list <span class="op">=</span> <span class="va">self</span>.search(query)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    articles <span class="op">=</span> <span class="va">self</span>.fetch_details(id_list)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> article <span class="kw">in</span> articles:</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        article_dict <span class="op">=</span> parse_paperinfo(article)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> Result.parse_obj(article_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'patch' is not defined</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="at">@patch</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> results(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>:Search,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    query:<span class="bu">str</span>, <span class="co">#Term to be queried in pubmed</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Generator[Result, <span class="va">None</span>, <span class="va">None</span>]:</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Method that do the search and retrieve a generator with all the infomration of the articles"""</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    id_list <span class="op">=</span> <span class="va">self</span>.search(query)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    articles <span class="op">=</span> <span class="va">self</span>.fetch_details(id_list)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> article <span class="kw">in</span> articles:</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        article_dict <span class="op">=</span> parse_paperinfo(article)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> Result.parse_obj(article_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<p><a href="https://github.com/Dmaturana81/pubmed_lib/blob/main/pubmed_lib/search.py#L82" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Dmaturana81/pubmed_lib/blob/main/pubmed_lib/search.py#L101" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="search.results" class="level3">
 <h3 class="anchored" data-anchor-id="search.results">Search.results</h3>
@@ -410,30 +418,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>articles <span class="op">=</span> search.results(<span class="st">'bifunctional degraders'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>articles <span class="op">=</span> search.results(<span class="st">'bifunctional degraders'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> <span class="bu">list</span>(articles)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'articles' is not defined</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> <span class="bu">list</span>(articles)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>results[<span class="op">-</span><span class="dv">1</span>].title</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'results' is not defined</code></pre>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>results[<span class="op">-</span><span class="dv">1</span>].title</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'INK4 Tumor Suppressor Proteins Mediate Resistance to CDK4/6 Kinase Inhibitors.'</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>results[<span class="op">-</span><span class="dv">1</span>].abstract</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'results' is not defined</code></pre>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>results[<span class="op">-</span><span class="dv">1</span>].abstract</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'Cyclin-dependent kinases 4 and 6 (CDK4/6) represent a major therapeutic vulnerability for breast cancer. The kinases are clinically targeted via ATP competitive inhibitors (CDK4/6i); however, drug resistance commonly emerges over time. To understand CDK4/6i resistance, we surveyed over 1,300 breast cancers and identified several genetic alterations (e.g., &lt;i&gt;FAT1&lt;/i&gt;, &lt;i&gt;PTEN&lt;/i&gt;, or &lt;i&gt;ARID1A&lt;/i&gt; loss) converging on upregulation of CDK6. Mechanistically, we demonstrate CDK6 causes resistance by inducing and binding CDK inhibitor INK4 proteins (e.g., p18&lt;sup&gt;INK4C&lt;/sup&gt;). &lt;i&gt;In vitro&lt;/i&gt; binding and kinase assays together with physical modeling reveal that the p18&lt;sup&gt;INK4C&lt;/sup&gt;-cyclin D-CDK6 complex occludes CDK4/6i binding while only weakly suppressing ATP binding. Suppression of INK4 expression or its binding to CDK6 restores CDK4/6i sensitivity. To overcome this constraint, we developed bifunctional degraders conjugating palbociclib with E3 ligands. Two resulting lead compounds potently degraded CDK4/6, leading to substantial antitumor effects &lt;i&gt;in vivo&lt;/i&gt;, demonstrating the promising therapeutic potential for retargeting CDK4/6 despite CDK4/6i resistance. SIGNIFICANCE: CDK4/6 kinase activation represents a common mechanism by which oncogenic signaling induces proliferation and is potentially targetable by ATP competitive inhibitors. We identify a CDK6-INK4 complex that is resilient to current-generation inhibitors and develop a new strategy for more effective inhibition of CDK4/6 kinases.&lt;i&gt;This article is highlighted in the In This Issue feature, p. 275&lt;/i&gt;.'</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>results[<span class="op">-</span><span class="dv">1</span>].published</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'results' is not defined</code></pre>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>results[<span class="op">-</span><span class="dv">1</span>].published</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>datetime.date(2021, 9, 20)</code></pre>
 </div>
 </div>
 
