@@ -2,9 +2,39 @@
 
 # %% auto 0
 __all__ = ['SEARCH_TAGS', 'DEPARMENT', 'INSTITUTE', 'REMOVE_INSTITUE', 'COUNTRY', 'STATES', 'BR_STATES', 'UNIVERSITY_ABBR',
-           'UNIVERSITY_MULTIPLE_CAMPUS', 'COUNTRIES', 'COUNTRIES_L', 'lower_countries', 'countries2list']
+           'UNIVERSITY_MULTIPLE_CAMPUS', 'COUNTRIES', 'COUNTRIES_L', 'get_from_dict_or_env', 'get_from_env',
+           'lower_countries', 'countries2list']
 
 # %% ../nbs/03_data.ipynb 3
+from pydantic import root_validator, validator, ValidationError
+from typing import Dict, Any, Optional
+import os
+
+# %% ../nbs/03_data.ipynb 4
+def get_from_dict_or_env(
+    data: Dict[str, Any], key: str, env_key: str, default: Optional[str] = None
+) -> str:
+    """Get a value from a dictionary or an environment variable."""
+    if key in data and data[key]:
+        return data[key]
+    else:
+        return get_from_env(key, env_key, default=default)
+
+# %% ../nbs/03_data.ipynb 5
+def get_from_env(key: str, env_key: str, default: Optional[str] = None) -> str:
+    """Get a value from a dictionary or an environment variable."""
+    if env_key in os.environ and os.environ[env_key]:
+        return os.environ[env_key]
+    elif default is not None:
+        return default
+    else:
+        raise ValueError(
+            f"Did not find {key}, please add an environment variable"
+            f" `{env_key}` which contains it, or pass"
+            f"  `{key}` as a named parameter."
+        )
+
+# %% ../nbs/03_data.ipynb 6
 SEARCH_TAGS = {
     'Affiliation': '[ad]',
     'All Fields': '[all]',
@@ -32,14 +62,14 @@ SEARCH_TAGS = {
 }
 
 
-# %% ../nbs/03_data.ipynb 4
+# %% ../nbs/03_data.ipynb 7
 #keyword list
 
 DEPARMENT = frozenset(['laboratorio', 'laboratories', 'laboratory',
     'laboratoire', 'institute', 'instituto', 'academico', 'academic', 'departamento', 'department', 'division',
     'faculty of ', 'facultad de', 'faculdade de', 'pesquisa', 'genomics center', 'research station'])
 
-# %% ../nbs/03_data.ipynb 5
+# %% ../nbs/03_data.ipynb 8
 INSTITUTE = frozenset(['college', 'university', 'universitat', 'universite',
     'unversiteit', 'universita', 'universidad', 'universiti', 'hospital', 'hopitaux de', 'unidade de',
     "ha'pital", 'istituti', 'istituto', 'institucio', 'institut', 'medical center', ' pharma',
@@ -97,13 +127,13 @@ INSTITUTE = frozenset(['college', 'university', 'universitat', 'universite',
     'allan wilson', 'allen institute', 'ameripath', 'biotechnologies', 'anaerobe systems',
     'nhs trust'])
 
-# %% ../nbs/03_data.ipynb 6
+# %% ../nbs/03_data.ipynb 9
 REMOVE_INSTITUE = frozenset(['pharmacology', 'college of pharmacy',
     'institute of zoology', 'institute of population', 'institute of bioinformatics',
     'institute of plant',  'section for ', 'institute of clinical medicine',
     'department of clinical'])
 
-# %% ../nbs/03_data.ipynb 7
+# %% ../nbs/03_data.ipynb 10
 COUNTRY = (
     ('brazil', 'rio de janeiro', 'são paulo', 'porto alegre', 'brasil', 'cordeiropolis', 'florianopolis', 'fortaleza', 'sao paulo', 'belo horizonte', 'uberlandia', 'recife'),
     ('argentina', 'buenos aires', 'rosario', 'cordoba', 'la plata'),
@@ -177,7 +207,7 @@ COUNTRY = (
     ('pakistan', 'islamabad')
 )
 
-# %% ../nbs/03_data.ipynb 8
+# %% ../nbs/03_data.ipynb 11
 STATES = frozenset(['Alabama', 'Alaska', 'Arizona', 'Arkansas',
     'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida',
     'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',
@@ -194,12 +224,12 @@ STATES = frozenset(['Alabama', 'Alaska', 'Arizona', 'Arkansas',
     ' ND', ' OH', ' OK', ' OR', ' PA', ' RI', ' SC', ' SD', ' TN', ' TX', ' UT',
     ' VT', ' VA', ' WA', ' WV', ' WI', ' WY', ' DC'])
 
-# %% ../nbs/03_data.ipynb 9
+# %% ../nbs/03_data.ipynb 12
 BR_STATES = frozenset([' AC',' AL',' AP',' AM', ' BA',' DF', ' ES', ' GO', ' MA',
                        ' MT', ' MS', ' MG', ' PA', ' PB', ' PR', ' PE', ' PI', ' RJ', ' RN',
                        ' RS', ' RO', ' RR', ' SC', ' SP', ' SE', ' TO', ' CE' ])
 
-# %% ../nbs/03_data.ipynb 10
+# %% ../nbs/03_data.ipynb 13
 # full name and abbreviation
 UNIVERSITY_ABBR = (
     ('university of california los angeles', 'UCLA', 'UC Los Angeles'),
@@ -214,7 +244,7 @@ UNIVERSITY_ABBR = (
     ('havard university school of', 'harvard school of')
 )
 
-# %% ../nbs/03_data.ipynb 11
+# %% ../nbs/03_data.ipynb 14
 # use to concat university with string
 UNIVERSITY_MULTIPLE_CAMPUS = (
     ('university of california', 'berkeley', 'los angeles', 'davis', 'davis medical center',
@@ -226,7 +256,7 @@ UNIVERSITY_MULTIPLE_CAMPUS = (
     ('university of minnesota', 'duluth', 'morris', 'medical Ccnter', 'rochester', 'crookston')
 )
 
-# %% ../nbs/03_data.ipynb 12
+# %% ../nbs/03_data.ipynb 15
 COUNTRIES = {
     'United States' : {
         'Alaska': {'state_code': 'AK'},
@@ -431,7 +461,7 @@ COUNTRIES = {
         }
 }
 
-# %% ../nbs/03_data.ipynb 13
+# %% ../nbs/03_data.ipynb 16
 def lower_countries(COUNTRIES):
     new_dict= dict()
     for k,v in COUNTRIES.items():
@@ -446,6 +476,6 @@ def countries2list(COUNTRIES):
         COUNTRIES_L[country] = set([x  for k,v in COUNTRIES[country].items() for x in (k, v['state_code'])])
     return COUNTRIES_L
 
-# %% ../nbs/03_data.ipynb 14
+# %% ../nbs/03_data.ipynb 17
 COUNTRIES = lower_countries(COUNTRIES)
 COUNTRIES_L = countries2list(COUNTRIES)

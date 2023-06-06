@@ -8,8 +8,8 @@ from Bio import Entrez
 import os
 from datetime import datetime, timedelta, date
 from fastcore.all import *
-from typing import Union, Optional
-from pydantic import BaseModel, ValidationError, validator
+from typing import Union, Optional, Any
+from pydantic import BaseModel, ValidationError, validator, root_validator
 
 # %% ../nbs/00_search.ipynb 5
 from .data import *
@@ -31,6 +31,17 @@ class Search(BaseModel):
     email:str = None
     api_key:str = None
     
+    @root_validator()
+    def validate_email(cls,values:dict )->dict:
+        email = get_from_dict_or_env(
+            values, "email", "EMAIL"
+        )
+        values["email"] = email
+        
+        api_key = get_from_dict_or_env(values, 'api_key', 'API_KEY')
+        values['api_key'] = api_key
+        return values
+        
     @validator('search_tag', always=True)
     def validate_search_tag(cls, v):
         if not v:
@@ -39,24 +50,7 @@ class Search(BaseModel):
             raise ValueError(f'Search tag need to be some of {SEARCH_TAGS.keys()}')
         return SEARCH_TAGS[v]
     
-    @validator('email',always=True)
-    def validate_email(cls,v ):
-        if 'EMAIL' not in os.environ.keys() or 'API_KEY' not in os.environ.keys():
-            print(f"you need to add email and api_key to the environment variables")            
-            print(f"['EMAIL'] and ['API_KEY']")
-            raise EnvironmentError()
-        else: 
-            return os.environ.get('EMAIL')
-        
-    @validator('api_key',always=True)
-    def validate_api(cls,v ):
-        if 'EMAIL' not in os.environ.keys() or 'API_KEY' not in os.environ.keys():
-            print(f"you need to add email and api_key to the environment variables")            
-            print(f"['EMAIL'] and ['API_KEY']")
-            raise EnvironmentError()
-        else: 
-            return os.environ.get('API_KEY')
-
+     
 
 # %% ../nbs/00_search.ipynb 9
 @patch
