@@ -7,5 +7,4 @@ __all__ = []
 import re
 import pandas as pd
 from fastcore.all import *
-from bs4 import BeautifulSoup
 

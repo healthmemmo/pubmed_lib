@@ -27,7 +27,8 @@ target="_blank" style="float:right; font-size:smaller">source</a>
 
 >      Search (search_tag:str=None, retmax:int=200, retmode:str='xml',
 >              sort:str='relevance', mindate:Optional[int]=None,
->              maxdate:Optional[int]=None, idlist:Optional[List[int]]=None)
+>              maxdate:Optional[int]=None, idlist:Optional[List[int]]=None,
+>              email:str=None, api_key:str=None)
 
 Search class to warp the search and results
 
